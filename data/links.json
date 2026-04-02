@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "name": "YouTube",
+    "url": "https://www.youtube.com/@raautsan",
+    "icon": ""
+  },
+  {
+    "id": "2",
+    "name": "TikTok",
+    "url": "https://tiktok.com",
+    "icon": ""
+  },
+  {
+    "id": "3",
+    "name": "Instagram",
+    "url": "https://www.instagram.com/raautsan/",
+    "icon": ""
+  }
+]

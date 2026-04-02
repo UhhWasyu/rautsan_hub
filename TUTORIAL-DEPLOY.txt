@@ -1,0 +1,177 @@
+# 🚀 Tutorial Deploy ke GitHub Pages
+> Panduan lengkap untuk upload website kamu ke internet secara GRATIS
+> Tidak perlu ngerti koding — ikutin langkah per langkah aja!
+
+---
+
+## 📋 Daftar Isi
+1. Persiapan Pertama Kali (cukup sekali)
+2. Cara Update Website Sehari-hari
+3. Apa yang TIDAK Bisa di GitHub Pages
+4. Kalau Nanti Mau Pindah ke VPS
+5. Troubleshooting
+6. Cheat Sheet
+
+---
+
+## 🛠️ Persiapan Pertama Kali (SEKALI SAJA)
+
+### Langkah 1 — Install Git
+1. Buka: https://git-scm.com/downloads
+2. Klik "Download for Windows" → install (next, next, finish)
+3. Buka Command Prompt (Win+R → ketik cmd → Enter)
+4. Ketik: git --version
+5. Jika muncul "git version 2.x.x" → Git sudah siap!
+
+---
+
+### Langkah 2 — Buat Akun GitHub
+1. Buka: https://github.com
+2. Klik "Sign up"
+3. Isi email, password, username
+   - Contoh username: rautsan → URL nanti: rautsan.github.io/rautsan-hub
+4. Verifikasi email
+5. Akun GitHub siap!
+
+---
+
+### Langkah 3 — Buat Repository di GitHub
+1. Login ke github.com
+2. Klik "+" pojok kanan atas → "New repository"
+3. Isi:
+   - Repository name: rautsan-hub (tanpa spasi)
+   - Pilih: Public (wajib!)
+   - JANGAN centang "Add a README"
+4. Klik "Create repository"
+5. Catat URL-nya (contoh: https://github.com/rautsan/rautsan-hub)
+
+---
+
+### Langkah 4 — Hubungkan Folder Proyek ke GitHub
+Buka VS Code → tekan Ctrl+backtick untuk buka terminal.
+Ketik 1 per 1, Enter setelah tiap baris:
+
+    git init
+
+    git remote add origin https://github.com/USERNAME/NAMA-REPO.git
+    (ganti USERNAME dan NAMA-REPO dengan milik kamu)
+
+    git branch -M main
+
+    echo node_modules/ > .gitignore
+    echo data/ >> .gitignore
+    echo uploads/ >> .gitignore
+
+---
+
+### Langkah 5 — Atur Nama & Email Git
+
+    git config --global user.name "Nama Kamu"
+    git config --global user.email "email@kamu.com"
+
+---
+
+### Langkah 6 — Deploy Pertama Kali!
+
+    node deploy.js
+
+Lalu:
+
+    git add .
+    git commit -m "First commit"
+    git push -u origin main
+
+Kalau muncul pop-up browser → login GitHub kamu.
+
+---
+
+### Langkah 7 — Aktifkan GitHub Pages
+1. Buka: github.com/USERNAME/NAMA-REPO
+2. Klik tab "Settings"
+3. Di menu kiri klik "Pages"
+4. Atur Source: Branch = main, Folder = /docs
+5. Klik "Save"
+6. Tunggu 1-2 menit
+7. URL website kamu muncul! Contoh: https://rautsan.github.io/rautsan-hub
+
+---
+
+## 🔄 CARA UPDATE WEBSITE SEHARI-HARI
+
+1. Edit konten di admin panel (buka: localhost:3000/admin)
+   → tambah produk, ganti foto, ubah profil, dll.
+
+2. Ketik di terminal VS Code:
+   node deploy.js
+
+3. Tunggu 1-2 menit → website otomatis update!
+
+SELESAI. Itu saja!
+
+---
+
+## ❌ Yang TIDAK Bisa di GitHub Pages
+
+Yang BISA dilihat pengunjung: landing page, produk, foto
+Yang TIDAK BISA: admin panel (private di PC kamu), upload foto langsung online
+Catatan: setiap ada perubahan → jalankan node deploy.js → website update
+
+---
+
+## 🖥️ Kalau Nanti Mau Pindah ke VPS
+
+1. Beli VPS (DigitalOcean $4/bln, Vultr $2.5/bln, dll)
+2. Di VPS ketik:
+   git clone https://github.com/USERNAME/NAMA-REPO.git
+   cd NAMA-REPO
+   npm install
+   node server.js
+3. Selesai! Tidak perlu deploy manual lagi
+4. Tidak ada kode yang perlu diubah — otomatis berfungsi!
+
+---
+
+## 🆘 Troubleshooting
+
+"git tidak dikenali"
+→ Restart VS Code setelah install Git
+
+"Permission denied" saat push
+→ Login ke GitHub di pop-up browser yang muncul
+
+"Website tidak update"
+→ Tunggu 5 menit, lalu Ctrl+Shift+R di browser
+
+"Foto tidak muncul"
+→ Jalankan ulang node deploy.js
+
+"Nothing to commit"
+→ Tidak masalah, website sudah up-to-date
+
+---
+
+## 📌 CHEAT SHEET — SIMPAN INI!
+
+PERTAMA KALI (sekali saja):
+  1. Install Git dari git-scm.com
+  2. Buat akun di github.com
+  3. Buat repository baru (Public) di GitHub
+  4. Di terminal VS Code:
+       git init
+       git remote add origin https://github.com/USERNAME/REPO.git
+       git branch -M main
+       echo node_modules/ > .gitignore
+       echo data/ >> .gitignore
+       echo uploads/ >> .gitignore
+       node deploy.js
+       git add .
+       git commit -m "First commit"
+       git push -u origin main
+  5. GitHub repo → Settings → Pages → main, /docs → Save
+
+SETIAP MAU UPDATE (rutin):
+  1. Edit di admin panel (localhost:3000/admin)
+  2. Ketik: node deploy.js
+  3. Tunggu 1-2 menit → selesai!
+
+URL WEBSITE: https://USERNAME.github.io/NAMA-REPO

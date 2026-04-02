@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rautsan Hub | Streamer & Snack</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; transition: all 0.4s ease; }
+        
+        /* THEME COLORS */
+        .dark body { background-color: #000a1a; color: #cbd5e1; }
+        .dark .btn-primary { background-color: #bcccdc; color: #001540; }
+        .dark .glass-box { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .dark .glass-box:hover { background: rgba(255, 255, 255, 0.1); }
+
+        .light body { background-color: #faf9f6; color: #4b3621; }
+        .light .btn-primary { background-color: #a56e34; color: #fddaa6; }
+        .light .glass-box { background: rgba(165, 110, 52, 0.05); border: 1px solid rgba(165, 110, 52, 0.1); }
+        .light .glass-box:hover { background: rgba(165, 110, 52, 0.1); }
+
+        #tab-indicator { transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); }
+    </style>
+</head>
+<body class="mb-20">
+
+    <div class="fixed top-8 right-8 z-50">
+        <button onclick="toggleTheme()" class="w-12 h-12 rounded-full flex items-center justify-center border border-current/10 glass-box hover:scale-110 transition">
+            <i id="theme-icon" class="fas fa-moon opacity-70"></i>
+        </button>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-6 sm:px-12 mt-24 sm:mt-32">
+        
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-10 pb-12 border-b border-current/5">
+            <div class="relative flex-shrink-0">
+                <div class="w-32 h-32 sm:w-44 sm:h-44 rounded-full border-4 border-current/10 overflow-hidden shadow-2xl">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Rautsan" class="w-full h-full object-cover" alt="Profile">
+                </div>
+            </div>
+
+            <div class="flex-grow text-center sm:text-left">
+                <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tighter mb-4">Rautsan</h1>
+                <p class="opacity-60 text-base sm:text-lg leading-relaxed max-w-lg mb-8">
+                    Streamer & Snack Enthusiast. Penyelamat lapar saat push rank! 🍿🎮
+                </p>
+
+                <div class="flex flex-wrap justify-center sm:justify-start gap-4">
+                    <a href="https://saweria.co/rautsan" target="_blank" class="btn-primary font-bold py-3 px-10 rounded-full shadow-lg hover:shadow-xl transition-all active:scale-95 text-sm uppercase tracking-widest">
+                        Donate
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2.5 mt-10 justify-center sm:justify-start">
+            <a href="#" class="glass-box w-11 h-11 rounded-lg flex items-center justify-center transition-all hover:-translate-y-1">
+                <i class="fab fa-youtube text-xl"></i>
+            </a>
+            <a href="#" class="glass-box w-11 h-11 rounded-lg flex items-center justify-center transition-all hover:-translate-y-1">
+                <i class="fab fa-tiktok text-xl"></i>
+            </a>
+            <a href="#" class="glass-box w-11 h-11 rounded-lg flex items-center justify-center transition-all hover:-translate-y-1">
+                <i class="fab fa-twitch text-xl"></i>
+            </a>
+            <button class="glass-box w-11 h-11 rounded-lg flex items-center justify-center transition-all text-current/40">
+                <i class="fas fa-ellipsis-h"></i>
+            </button>
+        </div>
+
+        <div class="mt-16 relative flex justify-center sm:justify-start gap-12 sm:gap-16 border-t border-current/5">
+            <div id="tab-indicator" class="absolute -top-[1px] h-[2px] bg-current w-12"></div>
+            <button onmouseenter="moveIndicator(this)" onclick="switchTab('snacks')" class="tab-btn py-5 text-xs sm:text-sm uppercase tracking-[0.3em] font-extrabold opacity-100 transition">Snacks</button>
+            <button onmouseenter="moveIndicator(this)" onclick="switchTab('affiliate')" class="tab-btn py-5 text-xs sm:text-sm uppercase tracking-[0.3em] font-extrabold opacity-30 hover:opacity-100 transition">Affiliate</button>
+        </div>
+
+        <div id="catalog-container" class="mt-4 grid grid-cols-3 gap-1.5 sm:gap-3">
+            </div>
+
+        <footer class="mt-32 pb-10 text-center sm:text-left opacity-20">
+            <p class="text-[10px] tracking-[0.5em] uppercase font-bold">&copy; 2026 RAUTSAN Hub</p>
+        </footer>
+    </div>
+
+    <script>
+        const data = {
+            snacks: [
+                { img: 'https://images.unsplash.com/photo-1599490659213-e2b9527bb087?w=400', url: '#' },
+                { img: 'https://images.unsplash.com/photo-1621932954149-a398e210dd20?w=400', url: '#' },
+                { img: 'https://images.unsplash.com/photo-1534422298391-e4f8c170db0f?w=400', url: '#' }
+            ],
+            affiliate: []
+        };
+
+        function toggleTheme() {
+            const h = document.documentElement;
+            const i = document.getElementById('theme-icon');
+            if(h.classList.contains('dark')) {
+                h.classList.replace('dark', 'light');
+                i.className = 'fas fa-sun';
+            } else {
+                h.classList.replace('light', 'dark');
+                i.className = 'fas fa-moon';
+            }
+        }
+
+        const ind = document.getElementById('tab-indicator');
+        window.onload = () => { moveIndicator(document.querySelector('.tab-btn')); render('snacks'); };
+
+        function moveIndicator(el) {
+            ind.style.width = el.offsetWidth + 'px';
+            ind.style.left = el.offsetLeft + 'px';
+        }
+
+        function switchTab(t) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.style.opacity = "0.3");
+            event.target.style.opacity = "1";
+            render(t);
+        }
+
+        function render(t) {
+            const c = document.getElementById('catalog-container');
+            const items = data[t];
+            if(items.length === 0) {
+                c.innerHTML = `<div class="col-span-3 py-32 flex flex-col items-center opacity-20">
+                    <i class="fas fa-camera text-4xl mb-4"></i>
+                    <p class="text-[10px] uppercase tracking-widest font-black">Empty Space</p>
+                </div>`;
+                return;
+            }
+            c.innerHTML = items.map(i => `
+                <a href="${i.url}" class="aspect-square glass-box rounded-lg overflow-hidden hover:scale-[1.02] transition-all duration-500">
+                    <img src="${i.img}" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition">
+                </a>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

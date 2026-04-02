@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Rautsan</title>
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div id="login-page">
+    <div class="login-box">
+      <h1>Admin Login</h1>
+      <p class="login-hint">Default: admin / admin123!</p>
+      <form id="login-form">
+        <label>Username</label>
+        <input type="text" id="login-username" value="admin" placeholder="Username" required>
+        <label>Password</label>
+        <input type="password" id="login-password" value="admin123!" placeholder="Password" required>
+        <button type="submit">Masuk</button>
+      </form>
+      <p class="error-msg" id="login-error"></p>
+      <button type="button" class="link-btn" id="btn-change-creds">Ubah username / password</button>
+      <div class="change-creds-form" id="change-creds-form" style="display:none;">
+        <h3>Verifikasi dulu</h3>
+        <input type="text" id="old-username" placeholder="Username lama">
+        <input type="password" id="old-password" placeholder="Password lama">
+        <input type="text" id="new-username" placeholder="Username baru">
+        <input type="password" id="new-password" placeholder="Password baru">
+        <button type="button" id="btn-save-creds">Simpan</button>
+        <span class="creds-msg" id="creds-msg"></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="admin-app" style="display:none;">
+    <aside class="sidebar">
+      <div class="sidebar-header">Admin</div>
+      <nav class="sidebar-nav">
+        <a href="#" data-page="dashboard" class="nav-item active">Dashboard</a>
+        <a href="#" data-page="profile" class="nav-item">Profile</a>
+        <a href="#" data-page="links" class="nav-item">Link Cluster</a>
+        <div class="nav-dropdown">
+          <button type="button" class="nav-item">Produk</button>
+          <div class="nav-dropdown-menu">
+            <a href="#" data-page="products-snacks" class="nav-item">Snacks</a>
+            <a href="#" data-page="products-affiliate" class="nav-item">Affiliate</a>
+          </div>
+        </div>
+      </nav>
+      <button type="button" class="btn-logout" id="btn-logout">Keluar</button>
+    </aside>
+    <main class="main">
+      <div id="page-dashboard" class="page active">
+        <h1>Selamat datang, <span id="welcome-name">Rautsan</span></h1>
+        <div class="telemetry-cards">
+          <div class="card">
+            <span class="card-value" id="stat-visits">0</span>
+            <span class="card-label">Kunjungan Landing Page</span>
+          </div>
+          <div class="card">
+            <span class="card-value" id="stat-views">-</span>
+            <span class="card-label">Produk paling sering dilihat</span>
+          </div>
+        </div>
+      </div>
+      <div id="page-profile" class="page">
+        <h1>Edit Profile</h1>
+        <form id="form-profile" class="admin-form">
+          <div class="form-row">
+            <label>Foto Profile (max 1, ganti saat upload)</label>
+            <input type="file" accept="image/*" id="profile-photo-file" name="profile">
+            <div class="preview" id="preview-profile"></div>
+          </div>
+          <div class="form-row" style="display:none;">
+            <label>Foto Sampul (max 1)</label>
+            <input type="file" accept="image/*" id="cover-photo-file" name="cover">
+            <div class="preview" id="preview-cover"></div>
+          </div>
+          <div class="form-row">
+            <label>Nama</label>
+            <input type="text" id="profile-name" placeholder="Nama">
+          </div>
+          <div class="form-row">
+            <label>Bio</label>
+            <textarea id="profile-bio" rows="4" placeholder="Bio"></textarea>
+          </div>
+          <div class="form-row">
+            <label>Link tombol Donate</label>
+            <input type="url" id="profile-donate" placeholder="https://saweria.co/...">
+          </div>
+          <div class="form-row">
+            <label>WhatsApp (default untuk Hubungi penjual)</label>
+            <input type="text" id="profile-whatsapp" placeholder="6281234567890">
+          </div>
+          <button type="submit">Simpan Profile</button>
+        </form>
+      </div>
+      <div id="page-links" class="page">
+        <h1>Link Cluster</h1>
+        <p class="hint">Default: YouTube, TikTok, Instagram. Hanya icon PNG yang ditampilkan di landing.</p>
+        <div id="links-list"></div>
+        <div class="add-link-form" id="add-link-form">
+          <h3>Tambah sosmed lain</h3>
+          <input type="text" id="link-name" placeholder="Nama sosmed">
+          <input type="url" id="link-url" placeholder="Link URL">
+          <label>Icon (PNG): <input type="file" accept=".png,image/png" id="link-icon"></label>
+          <button type="button" id="btn-add-link">Tambah</button>
+        </div>
+      </div>
+      <div id="page-products-snacks" class="page">
+        <div class="page-head">
+          <h1>Produk Snacks</h1>
+          <button type="button" class="btn-primary" id="btn-add-snack">Tambah Produk</button>
+        </div>
+        <div id="products-snacks-list" class="products-list"></div>
+        <div id="product-form-snacks" class="product-form-wrap" style="display:none;"></div>
+      </div>
+      <div id="page-products-affiliate" class="page">
+        <div class="page-head">
+          <h1>Produk Affiliate</h1>
+          <button type="button" class="btn-primary" id="btn-add-affiliate">Tambah Produk</button>
+        </div>
+        <div id="products-affiliate-list" class="products-list"></div>
+        <div id="product-form-affiliate" class="product-form-wrap" style="display:none;"></div>
+      </div>
+    </main>
+  </div>
+  <!-- Lightbox: klik preview foto untuk lihat lebih besar -->
+  <div id="img-lightbox" class="img-lightbox" style="display:none;">
+    <div class="img-lightbox-bg"></div>
+    <img id="img-lightbox-img" src="" alt="">
+    <button type="button" class="img-lightbox-close" id="img-lightbox-close">&times;</button>
+  </div>
+  <script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "Snack Contoh 1",
+  "price": "44444",
+  "priceNormal": "33333333",
+  "description": "fsdfsdfsdfsdf",
+  "whatsapp": "",
+  "marketplaces": [
+    {
+      "name": "Shopee",
+      "url": ""
+    },
+    {
+      "name": "Tokopedia",
+      "url": ""
+    },
+    {
+      "name": "TikTok Shop",
+      "url": ""
+    }
+  ]
+}

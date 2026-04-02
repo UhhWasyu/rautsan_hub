@@ -1,0 +1,21 @@
+{
+  "name": "Rautopia",
+  "price": "150000",
+  "priceNormal": "2000000",
+  "description": "sdfsdfdsfsddfsdfsdfsdf\nfsdffsdfsfsdfsdfsfds\nfsdfsdfsfsdfsdfsdfd",
+  "whatsapp": "",
+  "marketplaces": [
+    {
+      "name": "Shopee",
+      "url": "https://www.instagram.com/raautsan/"
+    },
+    {
+      "name": "Tokopedia",
+      "url": "https://www.instagram.com/raautsan/"
+    },
+    {
+      "name": "TikTok Shop",
+      "url": "https://www.instagram.com/raautsan/"
+    }
+  ]
+}
