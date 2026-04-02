@@ -1,0 +1,115 @@
+{
+  "profile": {
+    "name": "painappuru",
+    "bio": "Hallo Guys, Gua Rautsan dan Gua Cinta Simulation Game!!",
+    "donateLink": "https://saweria.co/placeholder",
+    "whatsapp": "6281234567890",
+    "profileImage": "profile/profile_1775084722874.png",
+    "coverImage": "",
+    "profileImageUrl": "/uploads/profile/profile_1775084722874.png",
+    "coverImageUrl": ""
+  },
+  "links": [
+    {
+      "id": "1",
+      "name": "YouTube",
+      "url": "https://www.youtube.com/@raautsan",
+      "icon": "",
+      "iconUrl": ""
+    },
+    {
+      "id": "2",
+      "name": "TikTok",
+      "url": "https://tiktok.com",
+      "icon": "",
+      "iconUrl": ""
+    },
+    {
+      "id": "3",
+      "name": "Instagram",
+      "url": "https://www.instagram.com/raautsan/",
+      "icon": "",
+      "iconUrl": ""
+    }
+  ],
+  "snacks": [
+    {
+      "id": "060181b5-13c1-42bc-9812-d81a365b03d1",
+      "name": "Rautopia",
+      "price": "150000",
+      "priceNormal": "2000000",
+      "description": "sdfsdfdsfsddfsdfsdfsdf\nfsdffsdfsfsdfsdfsfds\nfsdfsdfsfsdfsdfsdfd",
+      "whatsapp": "",
+      "marketplaces": [
+        {
+          "name": "Shopee",
+          "url": "https://www.instagram.com/raautsan/"
+        },
+        {
+          "name": "Tokopedia",
+          "url": "https://www.instagram.com/raautsan/"
+        },
+        {
+          "name": "TikTok Shop",
+          "url": "https://www.instagram.com/raautsan/"
+        }
+      ],
+      "coverUrl": "/uploads/products/snacks/060181b5-13c1-42bc-9812-d81a365b03d1/cover.png",
+      "images": [
+        "/uploads/products/snacks/060181b5-13c1-42bc-9812-d81a365b03d1/cover.png",
+        "/uploads/products/snacks/060181b5-13c1-42bc-9812-d81a365b03d1/img_1775086447387_e59h43.png",
+        "/uploads/products/snacks/060181b5-13c1-42bc-9812-d81a365b03d1/img_1775086447388_l30t4h.png",
+        "/uploads/products/snacks/060181b5-13c1-42bc-9812-d81a365b03d1/img_1775086447399_ie7gno.png"
+      ]
+    },
+    {
+      "id": "39af2e6b-e05e-413b-9d16-114aa932aa8a",
+      "name": "Snack Contoh 1",
+      "price": "44444",
+      "priceNormal": "33333333",
+      "description": "fsdfsdfsdfsdf",
+      "whatsapp": "",
+      "marketplaces": [
+        {
+          "name": "Shopee",
+          "url": ""
+        },
+        {
+          "name": "Tokopedia",
+          "url": ""
+        },
+        {
+          "name": "TikTok Shop",
+          "url": ""
+        }
+      ],
+      "coverUrl": "/uploads/products/snacks/39af2e6b-e05e-413b-9d16-114aa932aa8a/cover.png",
+      "images": [
+        "/uploads/products/snacks/39af2e6b-e05e-413b-9d16-114aa932aa8a/cover.png"
+      ]
+    }
+  ],
+  "affiliate": [
+    {
+      "id": "placeholder-a1",
+      "name": "Produk Affiliate 1",
+      "price": "99000",
+      "priceNormal": "120000",
+      "description": "Pendapat saya soal produk ini: sangat recommended dan worth it!",
+      "whatsapp": "",
+      "marketplaces": [
+        {
+          "name": "Shopee",
+          "url": "https://shopee.co.id/placeholder"
+        },
+        {
+          "name": "Tokopedia",
+          "url": "https://tokopedia.com/placeholder"
+        }
+      ],
+      "coverUrl": "",
+      "images": []
+    }
+  ],
+  "generatedAt": "2026-04-02T00:45:23.520Z"
+}

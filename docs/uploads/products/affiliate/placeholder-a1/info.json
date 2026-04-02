@@ -1,0 +1,11 @@
+{
+  "name": "Produk Affiliate 1",
+  "price": "99000",
+  "priceNormal": "120000",
+  "description": "Pendapat saya soal produk ini: sangat recommended dan worth it!",
+  "whatsapp": "",
+  "marketplaces": [
+    { "name": "Shopee", "url": "https://shopee.co.id/placeholder" },
+    { "name": "Tokopedia", "url": "https://tokopedia.com/placeholder" }
+  ]
+}

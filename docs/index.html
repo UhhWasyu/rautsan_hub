@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rautsan Hub | Streamer & Snack</title>
+    <!-- Framework Tailwind CSS via CDN untuk kemudahan modifikasi -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom Style Mini -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="mb-20">
+
+    <!-- Cover Image (Banner) -->
+    <div id="cover-photo" class="w-full h-48 sm:h-64 md:h-80 bg-current/5 bg-center bg-cover border-b border-current/10 transition-all opacity-80 mix-blend-luminosity hover:mix-blend-normal hover:opacity-100 duration-500"></div>
+
+    <!-- Tombol Switch Theme (Kanan Atas) -->
+    <div class="fixed top-6 right-6 sm:top-8 sm:right-8 z-50">
+        <button id="theme-toggle" class="w-12 h-12 rounded-full flex items-center justify-center border border-current/10 backdrop-blur-md bg-white/10 dark:bg-black/20 hover:scale-110 transition shadow-lg">
+            <i id="theme-icon" class="fas fa-moon opacity-70"></i>
+        </button>
+    </div>
+
+    <!-- Main Content Wrapper (Overlap the Cover) -->
+    <div class="max-w-3xl mx-auto px-6 sm:px-12 -mt-16 sm:-mt-20 relative z-10">
+        
+        <!-- Section Profile -->
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-10 pb-12 border-b border-current/5">
+            <div class="relative flex-shrink-0">
+                <div id="profile-photo" class="w-32 h-32 sm:w-44 sm:h-44 rounded-full border-4 border-current/10 bg-current/5 overflow-hidden shadow-2xl bg-center bg-cover transition-all">
+                    <!-- Foto di set via app.js -->
+                </div>
+            </div>
+
+            <div class="flex-grow text-center sm:text-left pt-2 sm:pt-4">
+                <h1 id="profile-name" class="text-4xl sm:text-6xl font-extrabold tracking-tighter mb-4">Rautsan</h1>
+                <p id="profile-bio" class="opacity-60 text-base sm:text-lg leading-relaxed max-w-lg mb-8">
+                    <!-- Bio di set via app.js -->
+                </p>
+
+                <div class="flex flex-wrap justify-center sm:justify-start gap-4">
+                    <a id="btn-donate" href="#" target="_blank" class="btn-primary font-bold py-3 px-10 rounded-full shadow-lg hover:shadow-xl transition-all active:scale-95 text-sm uppercase tracking-widest">
+                        Donate
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Link Cluster -->
+        <div id="link-cluster" class="flex flex-wrap gap-2.5 mt-10 justify-center sm:justify-start">
+            <!-- Link Social Media di set via app.js -->
+        </div>
+
+        <!-- Section Toko (Grid & Detail) -->
+        <div class="toko mt-16">
+            <!-- Tab Indicator Navigation -->
+            <div class="relative flex justify-center sm:justify-start gap-10 sm:gap-16 border-t border-current/5 toko-tabs">
+                <div id="tab-indicator" class="absolute -top-[1px] h-[2px] bg-current w-12 transition-all duration-300 pointer-events-none"></div>
+                
+                <button data-tab="snacks" class="tab tab-btn active py-5 text-xs sm:text-sm uppercase tracking-[0.3em] font-extrabold opacity-100 transition">Snacks</button>
+                <button data-tab="affiliate" class="tab tab-btn py-5 text-xs sm:text-sm uppercase tracking-[0.3em] font-extrabold opacity-30 hover:opacity-100 transition">Affiliate</button>
+            </div>
+
+            <!-- Feed Foto Produk (Grid) -->
+            <div id="feed-wrap" class="mt-4">
+                <div id="feed-snacks" class="feed grid grid-cols-3 gap-1.5 sm:gap-3"></div>
+                <div id="feed-affiliate" class="feed hidden grid grid-cols-3 gap-1.5 sm:gap-3"></div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-32 pb-10 text-center sm:text-left opacity-20">
+            <p class="text-[10px] tracking-[0.5em] uppercase font-bold">&copy; 2026 RAUTSAN Hub</p>
+        </footer>
+    </div>
+
+    <!-- Modal Post View (True Full Screen Overlay) -->
+    <div id="feed-posts-wrap" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 backdrop-blur-md opacity-0 transition-opacity duration-300">
+        <!-- Backdrop clickable to close -->
+        <div id="modal-backdrop" class="absolute inset-0 z-0 cursor-pointer"></div>
+        
+        <!-- Close Button -->
+        <button type="button" id="btn-back-grid" class="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 text-white w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/10 hover:bg-white/30 flex justify-center items-center transition-all shadow-lg hidden">
+            <i class="fas fa-times text-xl"></i>
+        </button>
+
+        <span id="feed-posts-title" class="hidden"></span>
+
+        <!-- Nav Arrow Left (di overlay level, bukan di dalam modal) -->
+        <button id="modal-arrow-left" onclick="navigatePost(-1)"
+            class="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-40 hidden md:flex w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-sm border border-white/20 text-white items-center justify-center transition-all shadow-xl hover:scale-110 active:scale-95"
+            style="display:none">
+            <i class="fas fa-chevron-left text-lg"></i>
+        </button>
+
+        <!-- Nav Arrow Right (di overlay level) -->
+        <button id="modal-arrow-right" onclick="navigatePost(1)"
+            class="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-40 hidden md:flex w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 backdrop-blur-sm border border-white/20 text-white items-center justify-center transition-all shadow-xl hover:scale-110 active:scale-95"
+            style="display:none">
+            <i class="fas fa-chevron-right text-lg"></i>
+        </button>
+
+        <!-- Dynamic Posts Body -->
+        <div id="feed-posts" class="relative z-10 w-full h-full flex items-center justify-center"></div>
+    </div>
+
+    <!-- Script Utama -->
+    <script src="js/app.js"></script>
+</body>
+</html>

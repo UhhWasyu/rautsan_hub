@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+/* --- Reset & Base Transitions --- */
+body { 
+    font-family: 'Plus Jakarta Sans', sans-serif; 
+    transition: background-color 0.4s ease, color 0.4s ease; 
+    overflow-x: hidden;
+}
+
+/* THEME COLORS */
+.dark body { background-color: #000a1a; color: #cbd5e1; }
+.dark .btn-primary { background-color: #bcccdc; color: #001540; }
+.dark .glass-box, .dark .post-card { 
+    background: rgba(255, 255, 255, 0.05); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+}
+.dark .glass-box:hover { background: rgba(255, 255, 255, 0.1); }
+.dark .border-current\/5 { border-color: rgba(203, 213, 225, 0.05); }
+.dark .border-current\/10 { border-color: rgba(203, 213, 225, 0.1); }
+.dark .bg-current { background-color: #cbd5e1; }
+.dark .text-current { color: #cbd5e1; }
+
+.light body { background-color: #faf9f6; color: #4b3621; }
+.light .btn-primary { background-color: #a56e34; color: #fddaa6; }
+.light .glass-box, .light .post-card { 
+    background: rgba(165, 110, 52, 0.05); 
+    border: 1px solid rgba(165, 110, 52, 0.1); 
+}
+.light .glass-box:hover { background: rgba(165, 110, 52, 0.1); }
+.light .border-current\/5 { border-color: rgba(75, 54, 33, 0.05); }
+.light .border-current\/10 { border-color: rgba(75, 54, 33, 0.1); }
+.light .bg-current { background-color: #4b3621; }
+.light .text-current { color: #4b3621; }
+
+/* --- Interaktif & Animasi --- */
+#tab-indicator { transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); }
+
+.feed-item .sneak { 
+    position: absolute; inset: 0; 
+    background: rgba(0,0,0,0.5); 
+    display: flex; align-items: center; justify-content: center; 
+    opacity: 0; transition: opacity 0.3s ease; 
+    padding: 12px; text-align: center; 
+}
+.feed-item:hover .sneak { opacity: 1; }
+.feed-item .sneak span { 
+    color: #fff; font-weight: 800; font-size: 0.95rem; 
+    text-transform: uppercase; letter-spacing: 0.1em; 
+}
+
+/* Marketplace Popover — muncul tepat di atas tombol Beli, tengah, animasi spring */
+.marketplace-popover {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px) scale(0.90);
+    padding: 10px 14px;
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0.25s ease;
+    white-space: nowrap;
+}
+.dark .marketplace-popover {
+    background: rgba(5, 15, 40, 0.9);
+    border: 1px solid rgba(255,255,255,0.12);
+}
+.light .marketplace-popover {
+    background: rgba(255, 253, 248, 0.95);
+    border: 1px solid rgba(165,110,52,0.15);
+}
+
+.btn-beli-wrap { position: relative; flex: 1; z-index: 10; }
+.btn-beli-wrap:hover .marketplace-popover,
+.btn-beli-wrap.open .marketplace-popover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Icon link di dalam popover */
+.mp-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s;
+    flex-shrink: 0;
+}
+.mp-link:hover {
+    transform: scale(1.18) translateY(-2px);
+    background: rgba(255,255,255,0.08);
+}
+.mp-link img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 6px;
+}
+.mp-link-text {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-align: center;
+    padding: 4px;
+    line-height: 1.2;
+    opacity: 0.8;
+}
+
+
+
+.post-card { overflow: hidden; border-radius: 24px; transition: transform 0.3s ease; }
+
+/* Carousel Styles */
+.carousel-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.carousel-track {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    width: 100%;
+    height: 100%;
+}
+.carousel-slide {
+    min-width: 100%;
+    height: 100%;
+}
+.carousel-dots {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+.carousel-dot.active {
+    background-color: #fff;
+    transform: scale(1.2);
+}
+
+/* Custom Scrollbar for Info container */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(150, 150, 150, 0.3);
+    border-radius: 10px;
+}
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+}
