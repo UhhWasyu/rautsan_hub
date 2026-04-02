@@ -30,6 +30,7 @@
   let currentList = [];
   let activeCarouselIndex = 0;
   let scrollTimeout = null;
+  let mobileViewOpen = false;  // Track mobile inline view state
 
   // ----- Theme Logic -----
   const themeKey = 'rautsan-theme';
@@ -233,7 +234,6 @@
         allPhotos = [p.coverUrl];
     }
     if (allPhotos.length === 0) allPhotos = [''];
-    else if (allPhotos.length > 4) allPhotos = allPhotos.slice(0, 4);
     activeCarouselIndex = 0;
 
     var imgHtml = '';
@@ -368,32 +368,238 @@
     currentTab = type;
     currentList = type === 'snacks' ? snacks : affiliate;
     currentPostIndex = idx;
-    
-    // Show Modal Overlay
-    const modalWrap = document.getElementById('feed-posts-wrap');
-    const postsEl = document.getElementById('feed-posts');
-    
-    modalWrap.classList.remove('hidden');
-    modalWrap.classList.add('flex');
-    document.getElementById('btn-back-grid').classList.remove('hidden');
-    
-    // Animate In (Scale & Opacity)
-    requestAnimationFrame(() => {
-        modalWrap.classList.remove('opacity-0');
-        modalWrap.classList.add('opacity-100');
-        postsEl.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
-        postsEl.classList.remove('scale-95');
-        postsEl.classList.add('scale-100');
+
+    var isMobile = window.innerWidth < 768;
+
+    if (isMobile) {
+        // ---- MOBILE: Inline IG-style seamless scroll ----
+        openMobileView(idx);
+    } else {
+        // ---- DESKTOP: Full-screen modal overlay (unchanged) ----
+        const modalWrap = document.getElementById('feed-posts-wrap');
+        const postsEl = document.getElementById('feed-posts');
+        
+        modalWrap.classList.remove('hidden');
+        modalWrap.classList.add('flex');
+        document.getElementById('btn-back-grid').classList.remove('hidden');
+        
+        requestAnimationFrame(() => {
+            modalWrap.classList.remove('opacity-0');
+            modalWrap.classList.add('opacity-100');
+            postsEl.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            postsEl.classList.remove('scale-95');
+            postsEl.classList.add('scale-100');
+        });
+
+        renderSinglePost();
+        document.body.style.overflow = 'hidden';
+        window.addEventListener('wheel', handleWheelScroll, {passive: false});
+    }
+  }
+
+  // ==========================================
+  //  MOBILE INLINE VIEW FUNCTIONS
+  // ==========================================
+
+  function buildMobilePostCard(p, isSnack, carouselIdSuffix) {
+    var allPhotos = [];
+    if (p.images && p.images.length > 0) allPhotos = p.images;
+    else if (p.coverUrl) allPhotos = [p.coverUrl];
+    if (allPhotos.length === 0) allPhotos = [''];
+
+    // --- Image / Carousel ---
+    var imgHtml = '';
+    var dotsHtml = '';
+    if (allPhotos.length <= 1) {
+        var src = allPhotos[0] || '';
+        imgHtml = src
+            ? '<img src="' + src + '" alt="' + p.name + '" loading="lazy">'
+            : '<div style="width:100%;height:100%;" class="bg-current opacity-5"></div>';
+    } else {
+        var trackId = 'mc-track-' + carouselIdSuffix;
+        imgHtml = '<div id="' + trackId + '" class="carousel-track">' +
+            allPhotos.map(function(src) {
+                return '<div class="carousel-slide"><img src="' + src + '" alt="' + p.name + '" loading="lazy"></div>';
+            }).join('') + '</div>';
+        dotsHtml = '<div class="carousel-dots">' +
+            allPhotos.map(function(_, i) {
+                return '<div class="carousel-dot' + (i === 0 ? ' active' : '') + '" data-trackid="' + trackId + '" data-index="' + i + '"></div>';
+            }).join('') + '</div>';
+    }
+
+    // --- Price ---
+    var priceHtml = '';
+    if (p.price) {
+        var hasDiscount = p.priceNormal && parseInt(p.priceNormal, 10) > parseInt(p.price, 10);
+        priceHtml = '<div class="mobile-post-price">Rp ' + formatNumber(p.price) +
+            (hasDiscount ? '<span class="original">Rp ' + formatNumber(p.priceNormal) + '</span>' : '') +
+            '</div>';
+    }
+
+    // --- Shipping ---
+    var shippingHtml = '';
+    if (isSnack) {
+        var days = daysUntilSaturday();
+        shippingHtml = '<div class="mobile-shipping-info"><i class="fas fa-truck"></i><span>Order sebelum Sabtu — pengiriman ' + days + ' hari lagi</span></div>';
+    }
+
+    // --- Buy Button ---
+    var beliHtml = '';
+    var validMp = (p.marketplaces || []).filter(function(m) { return m.url && m.url.trim() !== '' && m.url !== '#'; });
+    if (validMp.length > 0) {
+        var popoverItems = validMp.map(function(m) {
+            return '<a href="' + m.url + '" target="_blank" rel="noopener" class="mp-link" title="' + (m.name || '') + '">' +
+                '<img src="' + getMarketplaceIcon(m.name) + '" alt="' + (m.name || '') + '" onerror="this.parentNode.innerHTML=\'<span class=mp-link-text>' + (m.name || '?') + '</span>\'"></a>';
+        }).join('');
+        beliHtml = '<div class="btn-beli-wrap">' +
+            '<div class="marketplace-popover">' + popoverItems + '</div>' +
+            '<button type="button" class="beli-btn w-full py-2.5 px-4 rounded-xl font-bold text-sm bg-indigo-500 hover:bg-indigo-600 active:scale-95 text-white transition-all flex items-center justify-center gap-2">' +
+                '<i class="fas fa-shopping-cart"></i> Beli Sekarang' +
+            '</button>' +
+        '</div>';
+    }
+
+    // --- WhatsApp ---
+    var waHtml = '';
+    var waUrl = getProductWa(p);
+    if (waUrl) {
+        waHtml = '<a href="' + waUrl + '" target="_blank" rel="noopener" class="btn-whatsapp">' +
+            '<i class="fab fa-whatsapp text-green-400"></i> Chat</a>';
+    }
+
+    return '<div class="mobile-post-card" data-postid="' + p.id + '">' +
+        '<div class="mobile-post-img-wrap">' +
+            '<div class="carousel-wrap">' + imgHtml + dotsHtml + '</div>' +
+        '</div>' +
+        '<div class="mobile-post-info">' +
+            '<h2>' + (p.name || 'Produk') + '</h2>' +
+            priceHtml +
+            '<p class="mobile-post-desc">' + (p.description || '') + '</p>' +
+            shippingHtml +
+            '<div class="mobile-post-actions">' + beliHtml + waHtml + '</div>' +
+        '</div>' +
+    '</div>';
+  }
+
+  function bindMobileCarousels() {
+    // Bind carousel dots
+    document.querySelectorAll('#mobile-posts-list .carousel-dot').forEach(function(dot) {
+        dot.addEventListener('click', function() {
+            var trackId = dot.dataset.trackid;
+            var idx = parseInt(dot.dataset.index, 10);
+            var track = document.getElementById(trackId);
+            if (!track) return;
+            track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+            // Update dots in same carousel
+            track.closest('.mobile-post-img-wrap').querySelectorAll('.carousel-dot').forEach(function(d, i) {
+                d.classList.toggle('active', i === idx);
+            });
+        });
     });
 
-    renderSinglePost();
-    
-    // Disable body scroll
-    document.body.style.overflow = 'hidden';
+    // Bind touch swipe on each carousel
+    document.querySelectorAll('#mobile-posts-list .carousel-wrap').forEach(function(wrap) {
+        var track = wrap.querySelector('.carousel-track');
+        if (!track) return;
+        var totalSlides = track.querySelectorAll('.carousel-slide').length;
+        if (totalSlides <= 1) return;
+        var startX = 0;
+        var curIdx = 0;
+        wrap.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
+        wrap.addEventListener('touchend', function(e) {
+            var dx = e.changedTouches[0].clientX - startX;
+            if (Math.abs(dx) > 40) {
+                curIdx = dx < 0 ? Math.min(curIdx + 1, totalSlides - 1) : Math.max(curIdx - 1, 0);
+                track.style.transform = 'translateX(-' + (curIdx * 100) + '%)';
+                wrap.querySelectorAll('.carousel-dot').forEach(function(d, i) {
+                    d.classList.toggle('active', i === curIdx);
+                });
+            }
+        }, { passive: true });
+    });
 
-    // Event Listener Wheel Hover (hanya saat mouse ada di dalam / atas modal wrapper)
-    window.addEventListener('wheel', handleWheelScroll, {passive: false});
+    // Bind marketplace popover for mobile
+    document.querySelectorAll('#mobile-posts-list .btn-beli-wrap').forEach(function(wrap) {
+        var popover = wrap.querySelector('.marketplace-popover');
+        if (!popover) return;
+        var timer;
+        function showPop() { clearTimeout(timer); wrap.classList.add('open'); }
+        function hidePop() { timer = setTimeout(function() { wrap.classList.remove('open'); }, 250); }
+        wrap.addEventListener('mouseenter', showPop);
+        wrap.addEventListener('mouseleave', hidePop);
+        var beliBtn = wrap.querySelector('.beli-btn');
+        if (beliBtn) beliBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            wrap.classList.toggle('open');
+        });
+        document.addEventListener('click', function onOut(e) {
+            if (!wrap.contains(e.target)) {
+                wrap.classList.remove('open');
+                document.removeEventListener('click', onOut);
+            }
+        });
+    });
   }
+
+  function openMobileView(startIdx) {
+    mobileViewOpen = true;
+    var isSnack = currentTab === 'snacks';
+
+    // Build all cards HTML
+    var html = currentList.map(function(p, i) {
+        return buildMobilePostCard(p, isSnack, currentTab + '_' + i) +
+               (i < currentList.length - 1 ? '<div class="mobile-post-sep"></div>' : '');
+    }).join('');
+
+    var listEl = document.getElementById('mobile-posts-list');
+    var sectionEl = document.getElementById('mobile-post-section');
+    var feedWrap = document.getElementById('feed-wrap');
+
+    listEl.innerHTML = html;
+
+    // Hide grid, show inline section
+    feedWrap.style.display = 'none';
+    sectionEl.style.display = 'flex';
+
+    bindMobileCarousels();
+
+    // Push history state so back button works
+    history.pushState({ mobileView: true, tab: currentTab, idx: startIdx }, '');
+
+    // Scroll to the tapped post
+    requestAnimationFrame(function() {
+        var cards = listEl.querySelectorAll('.mobile-post-card');
+        if (cards[startIdx]) {
+            // Scroll to card. Use scrollIntoView for simplicity.
+            cards[startIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+  }
+
+  function closeMobileView() {
+    mobileViewOpen = false;
+    var sectionEl = document.getElementById('mobile-post-section');
+    var feedWrap = document.getElementById('feed-wrap');
+
+    sectionEl.style.display = 'none';
+    feedWrap.style.display = '';
+
+    // Clear content for memory
+    document.getElementById('mobile-posts-list').innerHTML = '';
+  }
+
+  // Back-bar click
+  document.getElementById('mobile-back-bar').addEventListener('click', function() {
+    // Go back in history -> triggers popstate -> closeMobileView
+    history.back();
+  });
+
+  // Android / iOS physical back button intercept
+  window.addEventListener('popstate', function(e) {
+    if (mobileViewOpen) {
+        closeMobileView();
+    }
+  });
 
   function closeModal() {
       const modalWrap = document.getElementById('feed-posts-wrap');
