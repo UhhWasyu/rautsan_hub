@@ -8,6 +8,17 @@
                           window.location.hostname.endsWith('.pages.dev') ||
                           window.location.search.includes('static=1'); // testing: tambahkan ?static=1 di URL
 
+  // Base path untuk GitHub Pages subpath (misal: /rautsan-hub/)
+  // Localhost = '' | GitHub Pages = '/repo-name'
+  var BASE_PATH = (function() {
+    if (!IS_STATIC_MODE) return '';
+    // Ambil pathname sampai sebelum index.html atau trailing slash
+    var p = window.location.pathname;
+    // Hapus bagian filename kalau ada
+    p = p.replace(/\/index\.html$/, '').replace(/\/$/, '');
+    return p; // contoh: '/rautsan-hub' atau ''
+  })();
+
   let profile = {};
   let links = [];
   let snacks = [];
@@ -76,9 +87,9 @@
   var MARKETPLACE_ICON_EXT = '.svg';
   var marketplaceIconSlug = { 'Shopee': 'shopee', 'Tokopedia': 'tokopedia', 'TikTok Shop': 'tiktokshop' };
   function getMarketplaceIcon(name) {
-    if (!name) return '/images/marketplace/generic.svg';
-    if (marketplaceIconSlug[name]) return '/images/marketplace/' + marketplaceIconSlug[name] + MARKETPLACE_ICON_EXT;
-    return '/images/marketplace/generic.svg';
+    if (!name) return BASE_PATH + '/images/marketplace/generic.svg';
+    if (marketplaceIconSlug[name]) return BASE_PATH + '/images/marketplace/' + marketplaceIconSlug[name] + MARKETPLACE_ICON_EXT;
+    return BASE_PATH + '/images/marketplace/generic.svg';
   }
   function formatNumber(n) {
     return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -460,9 +471,31 @@
   function loadAllData() {
     if (IS_STATIC_MODE) {
       // Mode GitHub Pages: 1 file data.json berisi semua data
-      return fetch('/data.json')
+      // Pakai BASE_PATH agar subpath repo (mis: /rautsan-hub/data.json) benar
+      return fetch(BASE_PATH + '/data.json')
         .then(function(r) { return r.json(); })
-        .then(function(d) { return [d.profile, d.links, d.snacks || [], d.affiliate || []]; });
+        .then(function(d) {
+          // Prefix semua image URL dengan BASE_PATH
+          var prof = d.profile || {};
+          if (prof.profileImageUrl) prof.profileImageUrl = BASE_PATH + prof.profileImageUrl;
+          if (prof.coverImageUrl)   prof.coverImageUrl   = BASE_PATH + prof.coverImageUrl;
+          var lnks = (d.links || []).map(function(l) {
+            return l.iconUrl ? Object.assign({}, l, { iconUrl: BASE_PATH + l.iconUrl }) : l;
+          });
+          var snk = (d.snacks || []).map(function(p) {
+            return Object.assign({}, p,
+              { coverUrl: p.coverUrl ? BASE_PATH + p.coverUrl : '' },
+              { images: (p.images || []).map(function(i) { return BASE_PATH + i; }) }
+            );
+          });
+          var aff = (d.affiliate || []).map(function(p) {
+            return Object.assign({}, p,
+              { coverUrl: p.coverUrl ? BASE_PATH + p.coverUrl : '' },
+              { images: (p.images || []).map(function(i) { return BASE_PATH + i; }) }
+            );
+          });
+          return [prof, lnks, snk, aff];
+        });
     } else {
       // Mode Lokal / VPS: pakai API seperti biasa
       return Promise.all([
