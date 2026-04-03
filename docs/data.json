@@ -91,25 +91,61 @@
   ],
   "affiliate": [
     {
-      "id": "placeholder-a1",
-      "name": "Produk Affiliate 1",
-      "price": "99000",
-      "priceNormal": "120000",
-      "description": "Pendapat saya soal produk ini: sangat recommended dan worth it!",
+      "id": "8ad8508a-c460-4959-b8dd-b93cd2fe7bf1",
+      "name": "Hambel.co - For Cuddle (Unisex)",
+      "price": "110000",
+      "priceNormal": "",
+      "description": "Ceritanya gua dapet tester dri parfum \"For Oliver\" dan menurut gua lebih cocok buat ciwi-ciwi.\n\nJujur, walaupun ini unisex, tapi menurut idung gua ini jauh lebih masuk ke profil cewek. Wanginya soft banget dan tipe yang seger-seger \"bersih\" gitu. Cocok banget buat kalian yang nggak suka parfum nyegrak.\n\nBuat harian atau ke kampus/kantor sih ini juara. Cowok-cowok yang mau kasih kado ke doi tapi bingung pilih wangi apa, fix ini bakal aman banget di idung mereka! ",
       "whatsapp": "",
       "marketplaces": [
         {
           "name": "Shopee",
-          "url": "https://shopee.co.id/placeholder"
+          "url": "https://s.shopee.co.id/1VuxC50xEZ?share_channel_code=1"
         },
         {
           "name": "Tokopedia",
-          "url": "https://tokopedia.com/placeholder"
+          "url": "https://vt.tokopedia.com/t/ZS98HW6k2NyxB-H9Ecs/"
+        },
+        {
+          "name": "TikTok Shop",
+          "url": "https://vt.tokopedia.com/t/ZS98HW6k2NyxB-H9Ecs/"
         }
       ],
-      "coverUrl": "",
-      "images": []
+      "coverUrl": "/uploads/products/affiliate/8ad8508a-c460-4959-b8dd-b93cd2fe7bf1/cover.png",
+      "images": [
+        "/uploads/products/affiliate/8ad8508a-c460-4959-b8dd-b93cd2fe7bf1/cover.png",
+        "/uploads/products/affiliate/8ad8508a-c460-4959-b8dd-b93cd2fe7bf1/img_1775189159531_nb8pff.png",
+        "/uploads/products/affiliate/8ad8508a-c460-4959-b8dd-b93cd2fe7bf1/img_1775189159534_vremn9.png"
+      ]
+    },
+    {
+      "id": "d57d8772-81f7-4ff3-98ec-ce58a64944ca",
+      "name": "My Daily Perfume | Hambel.co - For Oliver (Unisex)",
+      "price": "130000",
+      "priceNormal": "",
+      "description": "ini parfum daily gua sekarang.\nWanginya manis, ada sentuhan vanilla yang keluar makin enak setelah dibawa aktivitas agak lama. Katanya sih ada aroma kopinya, tapi di idung gua lebih dominan manis yang warm gitu.\n\nSemprot dikit aja udah cukup banget buat seharian karena emang seawet itu. Jangan kebanyakan kalau nggak mau bikin orang se-ruangan nengok semua karena wanginya \"nyegrak\" saking kuatnya!",
+      "whatsapp": "",
+      "marketplaces": [
+        {
+          "name": "Shopee",
+          "url": "https://s.shopee.co.id/8V4hXQapwF"
+        },
+        {
+          "name": "Tokopedia",
+          "url": "https://vt.tokopedia.com/t/ZS98HGGLLpQrQ-e7W3m/"
+        },
+        {
+          "name": "TikTok Shop",
+          "url": "https://vt.tokopedia.com/t/ZS98HGGLLpQrQ-e7W3m/"
+        }
+      ],
+      "coverUrl": "/uploads/products/affiliate/d57d8772-81f7-4ff3-98ec-ce58a64944ca/cover.png",
+      "images": [
+        "/uploads/products/affiliate/d57d8772-81f7-4ff3-98ec-ce58a64944ca/cover.png",
+        "/uploads/products/affiliate/d57d8772-81f7-4ff3-98ec-ce58a64944ca/img_1775188255403_xx3eky.png",
+        "/uploads/products/affiliate/d57d8772-81f7-4ff3-98ec-ce58a64944ca/img_1775188255405_7vldns.png"
+      ]
     }
   ],
-  "generatedAt": "2026-04-02T10:47:10.222Z"
+  "generatedAt": "2026-04-03T04:06:45.483Z"
 }
