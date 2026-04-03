@@ -654,6 +654,8 @@
 
     tab.addEventListener('click', function () {
       var newTab = tab.dataset.tab;
+      if (newTab === currentTab) return; // tidak ada perubahan
+
       document.querySelectorAll('.toko-tabs .tab').forEach(function (t) { 
         t.classList.remove('active'); t.style.opacity = "0.3"; 
       });
@@ -661,7 +663,37 @@
       currentTab = newTab;
       moveIndicator(tab);
 
-      // Change Feed Content
+      // ---- Mobile view sedang aktif: ganti konten in-place ----
+      if (mobileViewOpen) {
+        currentList = currentTab === 'snacks' ? snacks : affiliate;
+        currentPostIndex = 0;
+        var isSnack = currentTab === 'snacks';
+
+        // Update label back-bar supaya user tau lagi di tab mana
+        var backLabel = document.querySelector('#mobile-back-bar span');
+        if (backLabel) backLabel.textContent = 'Kembali ke Grid';
+
+        // Re-render list dengan konten baru, scroll ke atas
+        var html = currentList.map(function(p, i) {
+          return buildMobilePostCard(p, isSnack, currentTab + '_' + i) +
+                 (i < currentList.length - 1 ? '<div class="mobile-post-sep"></div>' : '');
+        }).join('');
+
+        var listEl = document.getElementById('mobile-posts-list');
+        if (!currentList.length) {
+          listEl.innerHTML = '<div style="padding:60px 0;text-align:center;opacity:0.3;"><i class="fas fa-camera" style="font-size:2rem;margin-bottom:1rem;display:block;"></i><p style="font-size:10px;text-transform:uppercase;letter-spacing:.2em;font-weight:900;">Empty Space</p></div>';
+        } else {
+          listEl.innerHTML = html;
+          bindMobileCarousels();
+        }
+
+        // Scroll mobile-post-section ke atas
+        var sectionEl = document.getElementById('mobile-post-section');
+        sectionEl.scrollTo({ top: 0, behavior: 'smooth' });
+        return; // jangan toggle feed-wrap di bawah
+      }
+
+      // ---- Desktop / Grid view: toggle feed biasa ----
       document.getElementById('feed-snacks').classList.add('hidden');
       document.getElementById('feed-affiliate').classList.add('hidden');
       document.getElementById('feed-' + currentTab).classList.remove('hidden');

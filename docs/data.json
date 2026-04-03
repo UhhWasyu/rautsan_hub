@@ -111,6 +111,7 @@
           "url": "https://vt.tokopedia.com/t/ZS98HW6k2NyxB-H9Ecs/"
         }
       ],
+      "order": 1,
       "coverUrl": "/uploads/products/affiliate/8ad8508a-c460-4959-b8dd-b93cd2fe7bf1/cover.png",
       "images": [
         "/uploads/products/affiliate/8ad8508a-c460-4959-b8dd-b93cd2fe7bf1/cover.png",
@@ -139,6 +140,7 @@
           "url": "https://vt.tokopedia.com/t/ZS98HGGLLpQrQ-e7W3m/"
         }
       ],
+      "order": 0,
       "coverUrl": "/uploads/products/affiliate/d57d8772-81f7-4ff3-98ec-ce58a64944ca/cover.png",
       "images": [
         "/uploads/products/affiliate/d57d8772-81f7-4ff3-98ec-ce58a64944ca/cover.png",
@@ -147,5 +149,5 @@
       ]
     }
   ],
-  "generatedAt": "2026-04-03T04:06:45.483Z"
+  "generatedAt": "2026-04-03T04:20:07.440Z"
 }
