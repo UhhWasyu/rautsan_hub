@@ -1,4 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-  <rect width="48" height="48" rx="8" fill="#ee4d2d"/>
-  <text x="24" y="30" text-anchor="middle" fill="#fff" font-size="10" font-family="sans-serif">Shopee</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <rect width="48" height="48" rx="10" fill="#EE4D2D"/>
+  <g transform="translate(8,7)">
+    <!-- Cart handle -->
+    <path d="M16 4 C16 4, 14 0, 10 0 C6 0, 4 4, 4 4" stroke="white" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <!-- Cart body -->
+    <rect x="1" y="6" width="30" height="22" rx="4" fill="white"/>
+    <!-- Cart bottom dots -->
+    <circle cx="10" cy="32" r="2.5" fill="white"/>
+    <circle cx="22" cy="32" r="2.5" fill="white"/>
+    <!-- Shopee S shape hint -->
+    <text x="16" y="22" text-anchor="middle" fill="#EE4D2D" font-size="13" font-weight="900" font-family="Arial,sans-serif">S</text>
+  </g>
 </svg>

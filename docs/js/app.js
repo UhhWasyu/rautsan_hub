@@ -183,11 +183,25 @@
       var track = document.getElementById('carousel-track');
       if (track) {
           track.style.transform = 'translateX(-' + (index * 100) + '%)';
-          document.querySelectorAll('.carousel-dot').forEach(function(dot, i) {
+          document.querySelectorAll('#feed-posts .carousel-dot').forEach(function(dot, i) {
               dot.classList.toggle('active', i === index);
           });
           activeCarouselIndex = index;
       }
+  };
+
+  // Desktop carousel prev/next (arrow buttons)
+  window.desktopCarouselPrev = function() {
+      var total = document.querySelectorAll('#feed-posts .carousel-dot').length;
+      if (total < 1) return;
+      var prev = Math.max(activeCarouselIndex - 1, 0);
+      changeCarousel(prev);
+  };
+  window.desktopCarouselNext = function() {
+      var total = document.querySelectorAll('#feed-posts .carousel-dot').length;
+      if (total < 1) return;
+      var next = Math.min(activeCarouselIndex + 1, total - 1);
+      changeCarousel(next);
   };
 
   function bindCarouselSwipe() {
@@ -295,14 +309,27 @@
         '</div>';
     }
 
-    // ---- Tombol WhatsApp ----
+
+    // ---- Tombol WhatsApp (khusus snack, affiliate tidak pakai) ----
     var waHtml = '';
     var waUrl = getProductWa(p);
-    if (waUrl) {
+    if (waUrl && isSnack) {
         waHtml = '<a href="' + waUrl + '" target="_blank" rel="noopener" ' +
             'class="py-2.5 px-4 rounded-xl font-bold text-sm border border-current/20 hover:bg-green-500/10 active:scale-95 transition-all flex items-center gap-2 flex-shrink-0">' +
             '<i class="fab fa-whatsapp text-green-400 text-base"></i> Chat' +
             '</a>';
+    }
+
+    // ---- Carousel arrows desktop (hanya muncul jika > 1 foto) ----
+    var carouselArrowsHtml = '';
+    if (allPhotos.length > 1) {
+        carouselArrowsHtml =
+            '<button type="button" class="carousel-arrow-btn carousel-arrow-prev" onclick="desktopCarouselPrev()" title="Foto sebelumnya">' +
+                '<i class="fas fa-chevron-left"></i>' +
+            '</button>' +
+            '<button type="button" class="carousel-arrow-btn carousel-arrow-next" onclick="desktopCarouselNext()" title="Foto berikutnya">' +
+                '<i class="fas fa-chevron-right"></i>' +
+            '</button>';
     }
 
     // Render modal — arrows TIDAK di dalam modal (pointer-events-none di parent)
@@ -311,7 +338,7 @@
             '<article class="flex flex-col md:flex-row ' + bgClass + ' ' + textClass + ' sm:rounded-2xl border border-current/10 shadow-2xl w-full h-full overflow-hidden pointer-events-auto transition-all">' +
                 // Foto kiri
                 '<div class="w-full h-[45%] md:h-full md:w-auto md:aspect-[4/5] bg-black/10 overflow-hidden flex-shrink-0 border-b md:border-b-0 md:border-r border-current/10 relative carousel-wrap group">' +
-                    imgHtml + dotsHtml +
+                    imgHtml + dotsHtml + carouselArrowsHtml +
                 '</div>' +
                 // Info kanan
                 '<div class="w-full h-[55%] md:h-full md:flex-1 px-5 sm:px-8 py-5 md:py-8 lg:p-10 flex flex-col overflow-hidden relative bg-transparent">' +
@@ -326,6 +353,7 @@
                 '</div>' +
             '</article>' +
         '</div>';
+
 
     // Bind marketplace popover (hover + click toggle)
     postsEl.querySelectorAll('.btn-beli-wrap').forEach(function(wrap) {
@@ -459,10 +487,10 @@
         '</div>';
     }
 
-    // --- WhatsApp ---
+    // --- WhatsApp (khusus snack, affiliate tidak pakai) ---
     var waHtml = '';
     var waUrl = getProductWa(p);
-    if (waUrl) {
+    if (waUrl && isSnack) {
         waHtml = '<a href="' + waUrl + '" target="_blank" rel="noopener" class="btn-whatsapp">' +
             '<i class="fab fa-whatsapp text-green-400"></i> Chat</a>';
     }

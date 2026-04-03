@@ -1,4 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-  <rect width="48" height="48" rx="8" fill="#42b549"/>
-  <text x="24" y="30" text-anchor="middle" fill="#fff" font-size="9" font-family="sans-serif">Tokopedia</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <rect width="48" height="48" rx="10" fill="#00AA5B"/>
+  <g transform="translate(7,7)">
+    <!-- Tokopedia bird -->
+    <ellipse cx="17" cy="20" rx="12" ry="13" fill="white"/>
+    <ellipse cx="17" cy="19" rx="9" ry="10" fill="#00AA5B"/>
+    <ellipse cx="17" cy="22" rx="6.5" ry="7.5" fill="white"/>
+    <!-- Eye -->
+    <circle cx="17" cy="18" r="2.5" fill="#00AA5B"/>
+    <circle cx="17" cy="18" r="1.2" fill="white"/>
+    <!-- Beak -->
+    <ellipse cx="17" cy="24.5" rx="2" ry="1.2" fill="#00AA5B"/>
+    <!-- Green top circle -->
+    <circle cx="17" cy="10" r="5" fill="#00AA5B"/>
+    <circle cx="17" cy="10" r="3" fill="white"/>
+  </g>
 </svg>

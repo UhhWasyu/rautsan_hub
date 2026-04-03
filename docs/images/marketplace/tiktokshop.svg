@@ -1,4 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-  <rect width="48" height="48" rx="8" fill="#000"/>
-  <text x="24" y="28" text-anchor="middle" fill="#fff" font-size="8" font-family="sans-serif">TikTok Shop</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <rect width="48" height="48" rx="10" fill="#010101"/>
+  <!-- TikTok note icon: two overlapping music notes shape -->
+  <!-- Red shadow (right) -->
+  <path d="M20 10 L20 30 C20 33.3 17.3 36 14 36 C10.7 36 8 33.3 8 30 C8 26.7 10.7 24 14 24 C15.1 24 16.1 24.3 17 24.8 L17 10 Z" fill="#FF004F"/>
+  <!-- Blue shadow (left) -->
+  <path d="M22 8 L22 28 C22 31.3 19.3 34 16 34 C12.7 34 10 31.3 10 28 C10 24.7 12.7 22 16 22 C17.1 22 18.1 22.3 19 22.8 L19 8 Z" fill="#00F2EA"/>
+  <!-- White main -->
+  <path d="M21 9 L21 29 C21 32.3 18.3 35 15 35 C11.7 35 9 32.3 9 29 C9 25.7 11.7 23 15 23 C16.1 23 17.1 23.3 18 23.8 L18 9 Z" fill="white"/>
+  <!-- Top curve (music note flag) -->
+  <path d="M21 9 C21 9 25 9 28 6 C28 6 28 10 33 11 L33 14 C33 14 28 13.5 25 10 L25 9 Z" fill="white"/>
+  <path d="M22 8 C22 8 26 8 29 5 C29 5 29 9 34 10 L34 13 C34 13 29 12.5 26 9 L26 8 Z" fill="#00F2EA"/>
+  <path d="M20 10 C20 10 24 10 27 7 C27 7 27 11 32 12 L32 15 C32 15 27 14.5 24 11 L24 10 Z" fill="#FF004F"/>
 </svg>
